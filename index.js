@@ -4,7 +4,8 @@ const app = express();
 const site = await Bun.file("./index.html").text();
 
 app.get("/", async (req, res) => {
-  let greet = site.replace("%%_USER_NAME%%", req.query.name);
+  const escapeHtml = require('escape-html');
+  let greet = site.replace("%%_USER_NAME%%", escapeHtml(req.query.name));
   res.send(greet);
 });
 
